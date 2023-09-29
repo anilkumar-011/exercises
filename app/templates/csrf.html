@@ -2,9 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>CSRF</title>
 </head>
 <body>
 
+
+<form action="" method="post">
+    {% csrf_token %}
+    <!-- Text input for Name -->
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <br>
+
+    <!-- Email input for Email Address -->
+    <label for="email">Email Address:</label>
+    <input type="email" id="email" name="email" required>
+    <br>
+
+    <!-- Submit button -->
+    <input type="submit" value="Submit">
+</form>
 </body>
 </html>

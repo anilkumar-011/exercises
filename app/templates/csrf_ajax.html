@@ -2,9 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>CSRF with AJAX</title>
 </head>
 <body>
+    <form id="ajax-form" method="post">
+        {% csrf_token %}
+        <!-- Text input for Name -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
 
+        <!-- Email input for Email Address -->
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+
+        <!-- Submit button -->
+        <input type="button" id="ajax-submit" value="Submit with AJAX">
+    </form>
+
+    <div id="result"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Add a click event handler to the AJAX submit button
+            $('#ajax-submit').click(function() {
+                // Prepare the data to send via AJAX
+                var data = {
+                    name: $('#name').val(),
+                    email: $('#email').val(),
+                    csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val() // Include the CSRF token
+                };
+
+                // Make an AJAX POST request
+                $.ajax({
+                    type: 'POST',
+                    url: '', // Set the URL to your server-side processing script
+                    data: data,
+                    success: function(response) {
+                        // Handle the response
+                        $('#result').html('Response: ' + response);
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        $('#result').html('Error: ' + error);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
